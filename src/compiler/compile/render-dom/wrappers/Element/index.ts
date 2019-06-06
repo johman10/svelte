@@ -265,7 +265,7 @@ export default class ElementWrapper extends Wrapper {
 				`@append(${parent_node}, ${node});`
 			);
 
-			if (parent_node === 'document.head') {
+			if (parent_node === '@document.head') {
 				block.builders.destroy.add_line(`@detach(${node});`);
 			}
 		} else {
@@ -374,7 +374,7 @@ export default class ElementWrapper extends Wrapper {
 		}
 
 		if (namespace) {
-			return `document.createElementNS("${namespace}", "${name}")`;
+			return `@document.createElementNS("${namespace}", "${name}")`;
 		}
 
 		return `@element("${name}")`;
@@ -460,7 +460,7 @@ export default class ElementWrapper extends Wrapper {
 				block.builders.init.add_block(deindent`
 					function ${handler}() {
 						${animation_frame && deindent`
-						cancelAnimationFrame(${animation_frame});
+						@cancelAnimationFrame(${animation_frame});
 						if (!${this.var}.paused) ${animation_frame} = @raf(${handler});`}
 						${needs_lock && `${lock} = true;`}
 						ctx.${handler}.call(${this.var}${contextual_dependencies.size > 0 ? ', ctx' : ''});
